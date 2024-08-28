@@ -1,5 +1,7 @@
 "use client"
 
+import { useRouter } from "next/navigation"
+import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -16,9 +18,9 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { toast } from "@/components/ui/use-toast"
+import Icon from "@/components/ui/icon"
 
 import { login } from "@/app/login/actions"
-import { useRouter } from "next/navigation"
 
 const FormSchema = z.object({
   email: z.string().email({
@@ -30,6 +32,7 @@ const FormSchema = z.object({
 type LoginFormSchema = z.infer<typeof FormSchema>
 
 export function LoginForm() {
+  const [loading, setLoading] = useState(false)
   const router = useRouter()
   const form = useForm<LoginFormSchema>({
     resolver: zodResolver(FormSchema),
@@ -40,8 +43,10 @@ export function LoginForm() {
   })
 
   async function onSubmit(data: LoginFormSchema) {
+    setLoading(true)
     const response = await login(data)
 
+    setLoading(false)
     if (!response.error) {
       router.push('/home')
       return
@@ -100,7 +105,7 @@ export function LoginForm() {
             />
           </div>
           <Button type="submit" className="w-full">
-            Login
+            {!loading ? 'Login' : (<Icon icon="semi-circle" className="animate-spin ml-2" color="#f2f2f2" />)}
           </Button>
         </div>
       </form>
