@@ -1,17 +1,54 @@
 import Image from "next/image"
-import AddPlantsButton from "./AddPlantsButton"
 
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { turso } from "@/lib/turso"
 
-export default function PlantsList() {
-  const plants = turso().execute({
-    sql: "",
-    args: []
-  })
+import AddPlantsButton from "./AddPlantsButton"
+import { AspectRatio } from "@/components/ui/aspect-ratio"
+import { Button } from "@/components/ui/button"
+import Icon from "@/components/ui/icon"
+
+type Plant = {
+  id: number
+  name: string
+  description: string
+}
+
+export default async function PlantsList() {
+  const { rows: plants } = await turso().execute("SELECT * FROM plants")
+
   return (
     <div className="mx-auto h-full w-full max-w-screen-md flex flex-col items-center justify-center">
-      <EmptyList />
+      {!plants || plants.length === 0 && <EmptyList />}
 
+      {plants.map((plant) => (
+        <Card key={plant.id as number} className="w-full max-w-sm mt-2">
+          <CardContent className="flex gap-3 py-4">
+            <div className="w-full max-w-[100px]">
+              <AspectRatio ratio={4 / 5}>
+                <Image src="/Logo.svg" alt={`${plant.name as string} image`} fill className="object-cover rounded" />
+              </AspectRatio>
+            </div>
+            <div>
+              <strong className="text-lg">{plant.name as string}</strong>
+              <p className="text-gray-500 text-xs">{plant.description as string}</p>
+            </div>
+          </CardContent>
+          <CardFooter>
+            <Button size="block">
+              <Icon icon="alarm" className="mr-2" size={18} />
+              Add Reminder
+            </Button>
+          </CardFooter>
+        </Card>
+      ))}
       <div className="mt-auto mb-36">
         <AddPlantsButton />
       </div>
