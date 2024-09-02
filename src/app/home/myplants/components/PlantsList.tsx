@@ -33,7 +33,7 @@ export default async function PlantsList() {
           <CardContent className="flex gap-3 py-4">
             <div className="w-full max-w-[100px]">
               <AspectRatio ratio={4 / 5}>
-                <Image src="/Logo.svg" alt={`${plant.name as string} image`} fill className="object-cover rounded" />
+                <Image src={plant.thumbnail ? plant.thumbnail as string : "/Logo.svg"} alt={`${plant.name as string} image`} fill className="object-cover rounded" />
               </AspectRatio>
             </div>
             <div>

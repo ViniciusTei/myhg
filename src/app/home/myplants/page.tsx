@@ -1,8 +1,17 @@
-import { Input } from "@/components/ui/input";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { Search } from "lucide-react";
+
+import { Input } from "@/components/ui/input";
+
 import PlantsList from "./components/PlantsList";
 
 export default function Page() {
+  const ck = cookies()
+  if (!ck.has('user.email') && !ck.has('user.id')) {
+    console.error('User not logged in')
+    redirect('/login')
+  }
   return (
     <main className="h-full w-full">
       <header className="bg-white w-full max-w-screen-md mx-auto p-4">

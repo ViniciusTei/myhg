@@ -1,6 +1,14 @@
 import { AlertTriangle } from "lucide-react";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export default function Page() {
+  const ck = cookies()
+  if (!ck.has('user.email') && !ck.has('user.id')) {
+    console.error('User not logged in')
+    redirect('/login')
+  }
+
   return (
     <div className="flex h-full flex-col items-center justify-center bg-gray-100 p-4 text-center">
       <div className="max-w-md rounded-lg bg-white p-8 shadow-lg">
