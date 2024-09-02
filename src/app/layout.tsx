@@ -8,6 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "My HG",
   description: "Developed by me for me.",
+  icons: "/Logo.svg"
 };
 
 export default function RootLayout({

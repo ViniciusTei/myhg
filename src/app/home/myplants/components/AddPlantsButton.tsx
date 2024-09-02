@@ -152,7 +152,7 @@ function AddPlantsForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6 grid grid-cols-2 gap-2">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full grid grid-cols-2 gap-2">
         <div className="row-span-full">
           <FormField
             control={form.control}
@@ -244,7 +244,7 @@ function AddPlantsForm() {
                     {plantTypes?.map((type: any) => (
                       <SelectItem key={type.id} value={type.id}>{type.name}</SelectItem>
                     ))}
-                    <SelectItem value={0}>Other</SelectItem>
+                    <SelectItem value="0">Other</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />

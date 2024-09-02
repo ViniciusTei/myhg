@@ -25,7 +25,7 @@ export default async function PlantsList() {
   const { rows: plants } = await turso().execute("SELECT * FROM plants")
 
   return (
-    <div className="mx-auto h-full w-full max-w-screen-md flex flex-col items-center justify-center">
+    <div className="mx-auto w-full max-w-screen-md flex flex-col items-center justify-center">
       {!plants || plants.length === 0 && <EmptyList />}
 
       {plants.map((plant) => (
@@ -49,7 +49,7 @@ export default async function PlantsList() {
           </CardFooter>
         </Card>
       ))}
-      <div className="mt-auto mb-36">
+      <div className="fixed bottom-20">
         <AddPlantsButton />
       </div>
     </div>
