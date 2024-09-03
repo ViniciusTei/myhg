@@ -3,10 +3,7 @@ import Image from "next/image"
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card"
 import { turso } from "@/lib/turso"
 
@@ -14,12 +11,6 @@ import AddPlantsButton from "./AddPlantsButton"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { Button } from "@/components/ui/button"
 import Icon from "@/components/ui/icon"
-
-type Plant = {
-  id: number
-  name: string
-  description: string
-}
 
 export default async function PlantsList() {
   const { rows: plants } = await turso().execute("SELECT * FROM plants")
@@ -49,6 +40,7 @@ export default async function PlantsList() {
           </CardFooter>
         </Card>
       ))}
+
       <div className="fixed bottom-20">
         <AddPlantsButton />
       </div>

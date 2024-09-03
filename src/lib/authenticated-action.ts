@@ -1,9 +1,10 @@
 import { redirect } from "next/navigation";
-import { NextRequest, NextResponse } from "next/server";
+import { cookies } from "next/headers"
 
-export default function AuthenticatedAction(request: NextRequest) {
-  if (request.cookies.has('user.email') && request.cookies.has('user.id')) {
-    return NextResponse.next()
+export default function AuthenticatedAction() {
+  const ck = cookies()
+  if (ck.has('user.email') && ck.has('user.id')) {
+    return
   }
 
   redirect('/login')
