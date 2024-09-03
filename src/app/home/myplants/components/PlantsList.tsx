@@ -19,9 +19,18 @@ import { Button } from "@/components/ui/button"
 import Icon from "@/components/ui/icon"
 
 import AddPlantsButton from "./AddPlantsButton"
+import { revalidatePath } from "next/cache"
 
 export default async function PlantsList() {
   const { rows: plants } = await turso().execute("SELECT * FROM plants")
+
+  async function deletePlant(plantId: number) {
+    await turso().execute({
+      sql: 'DELETE FROM plants WHERE id == ?',
+      args: [plantId]
+    })
+    revalidatePath('/home/myplants')
+  }
 
   return (
     <div className="mx-auto w-full max-w-screen-md flex flex-col items-center justify-center">
@@ -37,7 +46,7 @@ export default async function PlantsList() {
             <DropdownMenuContent>
               <DropdownMenuLabel>{plant.name as string}</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Delete <Icon icon="trash" size={16} className="ml-auto" /></DropdownMenuItem>
+              <DropdownMenuItem onClick={() => deletePlant(plant.id as number)}>Delete <Icon icon="trash" size={16} className="ml-auto" /></DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 
