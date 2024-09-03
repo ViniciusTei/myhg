@@ -1,10 +1,10 @@
 "use client"
 
 import { IconBaseProps } from "react-icons";
-import { PiCircleNotchThin, PiScan, PiPlant, PiAlarm, PiHouseLine, PiGearSixFill, PiPlus } from "react-icons/pi";
+import { PiDotsThree, PiTrash, PiCircleNotchThin, PiScan, PiPlant, PiAlarm, PiHouseLine, PiGearSixFill, PiPlus } from "react-icons/pi";
 
 interface IconProps extends IconBaseProps {
-  icon: 'semi-circle' | 'scan' | 'plant' | 'alarm' | 'site' | 'settings' | 'plus'
+  icon: 'semi-circle' | 'scan' | 'plant' | 'alarm' | 'site' | 'settings' | 'plus' | 'dots' | 'trash'
 }
 
 export default function Icon({ icon, ...props }: IconProps) {
@@ -23,6 +23,10 @@ export default function Icon({ icon, ...props }: IconProps) {
       return <PiGearSixFill {...props} />
     case 'plus':
       return <PiPlus {...props} />
+    case 'dots':
+      return <PiDotsThree {...props} />
+    case 'trash':
+      return <PiTrash {...props} />
     default:
       console.log(`Icon ${icon} not implemented!`)
       return null

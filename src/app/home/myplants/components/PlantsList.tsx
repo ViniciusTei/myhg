@@ -6,11 +6,19 @@ import {
   CardFooter,
 } from "@/components/ui/card"
 import { turso } from "@/lib/turso"
-
-import AddPlantsButton from "./AddPlantsButton"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { Button } from "@/components/ui/button"
 import Icon from "@/components/ui/icon"
+
+import AddPlantsButton from "./AddPlantsButton"
 
 export default async function PlantsList() {
   const { rows: plants } = await turso().execute("SELECT * FROM plants")
@@ -20,7 +28,19 @@ export default async function PlantsList() {
       {!plants || plants.length === 0 && <EmptyList />}
 
       {plants.map((plant) => (
-        <Card key={plant.id as number} className="w-full max-w-sm mt-2">
+        <Card key={plant.id as number} className="w-full max-w-sm mt-2 relative">
+
+          <DropdownMenu>
+            <DropdownMenuTrigger className="absolute top-0 right-0 m-3 rotate-90 ">
+              <Icon icon="dots" size={22} />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>{plant.name as string}</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Delete <Icon icon="trash" size={16} className="ml-auto" /></DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
           <CardContent className="flex gap-3 py-4">
             <div className="w-full max-w-[100px]">
               <AspectRatio ratio={4 / 5}>
