@@ -45,7 +45,7 @@ export default function AddPlantsButton() {
             </DialogDescription>
           </DialogHeader>
 
-          <AddPlantsForm handleSuccess={() => setOpen(false)} />
+          <AddPlantsForm />
 
         </DialogContent>
       </Dialog>
@@ -65,7 +65,7 @@ export default function AddPlantsButton() {
           <DrawerDescription>Enter where it is located and its info.</DrawerDescription>
         </DrawerHeader>
 
-        <AddPlantsForm handleSuccess={() => setOpen(false)} />
+        <AddPlantsForm />
 
         <DrawerFooter>
           <Button>Submit</Button>

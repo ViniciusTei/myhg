@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import Image from "next/image"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -31,11 +31,7 @@ import usePlantTypes from "@/hooks/use-plant-types"
 import Icon from "@/components/ui/icon"
 import { create } from "../actions"
 
-interface AddPlantsFormProps {
-  handleSuccess: () => void
-}
-
-export default function AddPlantsForm({ handleSuccess }: AddPlantsFormProps) {
+export default function AddPlantsForm() {
   const { plantTypes, isLoading } = usePlantTypes()
   const form = useForm<z.infer<typeof PlantsSchema>>({
     resolver: zodResolver(PlantsSchema),
@@ -60,7 +56,6 @@ export default function AddPlantsForm({ handleSuccess }: AddPlantsFormProps) {
         title: "Success",
         description: "You have inserted the new plant!",
       })
-      handleSuccess()
     } catch (err) {
       toast({
         title: "Error",
