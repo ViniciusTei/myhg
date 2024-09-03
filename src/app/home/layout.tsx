@@ -7,6 +7,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "My HG",
   description: "Developed by me for me.",
+  icons: "/favicon.ico"
 };
 
 export default function HomeLayout({
