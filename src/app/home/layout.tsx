@@ -35,7 +35,7 @@ export default function HomeLayout({
           </NavigationMenuItem>
 
           <NavigationMenuItem>
-            <Link href="/home" legacyBehavior passHref>
+            <Link href="/home/sites" legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 <div>
                   <Icon icon="site" size={16} className="mx-auto" />

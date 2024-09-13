@@ -1,6 +1,48 @@
 import { turso } from "@/lib/turso"
 import { NextResponse } from "next/server"
 
+export async function GET(request: Request, response: Response) {
+  const client = turso()
+  const { rows: currentInfoRows } = await client.execute('SELECT * from grow_monitor order by id DESC limit 1')
+
+  if (currentInfoRows.length !== 1) {
+    return NextResponse.json(
+      {
+        message: "Error! Cannot get current info."
+      },
+      {
+        status: 500,
+      }
+    )
+  }
+
+  const { rows: allInfoRows } = await client.execute('SELECT * from grow_monitor')
+
+  if (allInfoRows.length === 0) {
+    return NextResponse.json(
+      {
+        message: "Error! Cannot get all info."
+      },
+      {
+        status: 500,
+      }
+    )
+  }
+
+  return NextResponse.json(
+    {
+      message: "Sucesso!",
+      data: {
+        current: currentInfoRows[0],
+        all: allInfoRows
+      }
+    },
+    {
+      status: 200,
+    }
+  )
+}
+
 export async function POST(request: Request, response: Response) {
   const data = await request.json()
   if (!data || !data.temperature || !data.humidity) {
