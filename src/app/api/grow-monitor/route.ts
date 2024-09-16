@@ -1,11 +1,11 @@
 import { turso } from "@/lib/turso"
 import { NextResponse } from "next/server"
 
-const queries = {
-  lastDay: 'SELECT *, strftime(\'%Y-%m-%d %H:00\', time_iso) as hour_group FROM grow_monitor WHERE datetime(time_iso) >= datetime(\'now\', \'-24 hours\') ORDER BY time_iso;'
-}
-
 export async function GET(request: Request, response: Response) {
+  const queries = {
+    lastDay: 'SELECT *, strftime(\'%Y-%m-%d %H:00\', time_iso) as hour_group FROM grow_monitor WHERE datetime(time_iso) >= datetime(\'now\', \'-24 hours\') ORDER BY time_iso;'
+  }
+
   try {
 
     const client = turso()
