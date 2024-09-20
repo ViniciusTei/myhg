@@ -1,9 +1,10 @@
 'use client'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
-import { ThermometerIcon, DropletIcon, SunIcon } from 'lucide-react'
-import { ChartConfig, ChartContainer } from "@/components/ui/chart";
 import { useEffect, useState } from "react";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
+import { ThermometerIcon, DropletIcon, SunIcon } from 'lucide-react'
+
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { ChartConfig, ChartContainer } from "@/components/ui/chart";
 
 type CurrentInfo = {
   temperature: number
@@ -34,7 +35,7 @@ export default function SiteInfoCard() {
 
     async function fetchCurrentInfo() {
       try {
-        let info = await fetch('/api/grow-monitor')
+        let info = await fetch('/api/grow-monitor', { cache: "no-store" })
         let { data } = await info.json()
         setCurrentInfo(data.current)
         setAllInfo(data.all)
@@ -46,7 +47,6 @@ export default function SiteInfoCard() {
 
     fetchCurrentInfo()
   }, [])
-  console.log(currentInfo)
 
   return (
 
@@ -56,28 +56,17 @@ export default function SiteInfoCard() {
         <CardDescription>Ultimas 24 horass</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid gap-4 md:grid-cols-2">
-          <div className="space-y-2">
-            <h3 className="text-lg font-semibold">Temperatura</h3>
+        <div className="grid">
+          <div className="w-full">
+            <h3 className="text-lg font-semibold">Temperatura e Umidade</h3>
             <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
               <LineChart data={allInfo}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="time" tickFormatter={formatTimeValue} />
                 <YAxis />
                 <Tooltip />
-                <Line type="monotone" dataKey="temperature" stroke="#ef4444" />
-              </LineChart>
-            </ChartContainer>
-          </div>
-          <div className="space-y-2">
-            <h3 className="text-lg font-semibold">Umidade</h3>
-            <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-              <LineChart data={allInfo}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="time" tickFormatter={formatTimeValue} />
-                <YAxis />
-                <Tooltip />
-                <Line type="monotone" dataKey="humidity" stroke="#3b82f6" />
+                <Line type="monotone" dataKey="temperature" stroke="#ef4444" dot={false} />
+                <Line type="monotone" dataKey="humidity" stroke="#3b82f6" dot={false} />
               </LineChart>
             </ChartContainer>
           </div>

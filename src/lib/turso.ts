@@ -14,5 +14,6 @@ export function turso(): Client {
   return createClient({
     url: process.env.NEXT_TURSO_DB_URL as string,
     authToken: process.env.NEXT_TURSO_DB_AUTH_TOKEN as string,
+    syncInterval: 60,
   });
 }
