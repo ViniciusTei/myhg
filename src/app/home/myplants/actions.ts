@@ -12,20 +12,12 @@ export async function create(data: Plants) {
     const user = getAuthenticatedUserAction()
     const conn = turso()
 
-    const lastInsertRowid = await new AddPlant(conn).add({
+    await new AddPlant(conn).add({
       ...data,
       owner: user.id as unknown as number
     })
 
     revalidatePath('/home/myplants')
-    return {
-      code: "SUCCESS",
-      message: `Inserted ${data.name} into database successfully!`,
-      data: {
-        id: lastInsertRowid,
-        ...data,
-      }
-    }
   } catch (err) {
     return {
       code: "ERROR",
@@ -40,10 +32,6 @@ export async function remove(id: number) {
     const conn = turso()
     await new DeletePlant(conn).delete(id)
     revalidatePath('/home/myplants')
-    return {
-      code: "SUCCESS",
-      message: 'Deleted successfully!',
-    }
   } catch (err) {
     return {
       code: "ERROR",
