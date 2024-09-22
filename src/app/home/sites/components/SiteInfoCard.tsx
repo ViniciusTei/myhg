@@ -35,7 +35,7 @@ export default function SiteInfoCard() {
 
     async function fetchCurrentInfo() {
       try {
-        let info = await fetch('/api/grow-monitor', { cache: "no-store" })
+        let info = await fetch('/api/grow-monitor', { next: { tags: ['grow-monitor'] } })
         let { data } = await info.json()
         setCurrentInfo(data.current)
         setAllInfo(data.all)

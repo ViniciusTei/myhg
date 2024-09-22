@@ -1,4 +1,5 @@
 import { turso } from "@/lib/turso"
+import { revalidateTag } from "next/cache"
 import { NextResponse } from "next/server"
 
 export async function GET() {
@@ -35,37 +36,7 @@ export async function GET() {
       )
     }
 
-    //const selectedRows = [];
-    //
-    //const groupedByHour = allInfoRows.reduce((acc, row) => {
-    //  const hourGroup = row.hour_group as unknown as any;
-    //  if (!hourGroup) return acc
-    //  if (!acc[hourGroup]) {
-    //    acc[hourGroup] = [];
-    //  }
-    //  acc[hourGroup].push(row);
-    //  return acc;
-    //}, {} as any);
-    //
-    //for (const hour in groupedByHour) {
-    //  const records = groupedByHour[hour];
-    //
-    //  // Se existirem 5 ou menos registros, mantemos todos
-    //  if (records.length <= 5) {
-    //    selectedRows.push(...records);
-    //  } else {
-    //    // Pegar o primeiro, três do meio, e o último
-    //    const first = records[0];
-    //    const last = records[records.length - 1];
-    //
-    //    // Calcular o meio
-    //    const midStart = Math.floor((records.length - 1) / 2) - 1;
-    //    const middleRecords = records.slice(midStart, midStart + 3);
-    //
-    //    selectedRows.push(first, ...middleRecords, last);
-    //  }
-    //}
-
+    revalidateTag("grow-monitor")
     return NextResponse.json(
       {
         message: "Sucesso!",
