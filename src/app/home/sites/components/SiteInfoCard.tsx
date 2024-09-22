@@ -1,5 +1,4 @@
 'use client'
-import { useEffect, useState } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
 import { ThermometerIcon, DropletIcon, SunIcon } from 'lucide-react'
 
@@ -27,26 +26,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export default function SiteInfoCard() {
-  const [currentInfo, setCurrentInfo] = useState<CurrentInfo>()
-  const [allInfo, setAllInfo] = useState<AllInfo[]>()
-
-  useEffect(() => {
-
-    async function fetchCurrentInfo() {
-      try {
-        let info = await fetch('/api/grow-monitor', { next: { tags: ['grow-monitor'] } })
-        let { data } = await info.json()
-        setCurrentInfo(data.current)
-        setAllInfo(data.all)
-
-      } catch (err) {
-        console.log(err)
-      }
-    }
-
-    fetchCurrentInfo()
-  }, [])
+export default function SiteInfoCard({ currentInfo, allInfo }: { currentInfo: CurrentInfo, allInfo: AllInfo[] }) {
 
   return (
 

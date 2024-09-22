@@ -1,8 +1,25 @@
 import { Search } from "lucide-react";
+
 import { Input } from "@/components/ui/input";
+import { turso } from "@/lib/turso"
+
 import SiteInfoCard from "./components/SiteInfoCard";
 
-export default function SitesPage() {
+export default async function SitesPage() {
+  const client = turso()
+
+  const { rows: currentInfoRows } = await client.execute('SELECT * from grow_monitor order by id DESC limit 1')
+  if (currentInfoRows.length !== 1) {
+    throw new Error("Error! Cannot get current info.")
+  }
+
+  const { rows: allInfoRows } = await client.execute("SELECT * FROM grow_monitor WHERE datetime(time_iso) >= datetime('now', '-24 hours') ORDER BY time_iso;")
+  if (allInfoRows.length === 0) {
+    throw new Error("Error! Cannot get all info.")
+  }
+
+  const currentInfo = Object.assign({}, currentInfoRows[0]) as any
+  const allInfo = allInfoRows.map((row: any) => Object.assign({}, row)) as any
 
   return (
     <div className="w-full overflow-y-auto pb-14">
@@ -16,7 +33,7 @@ export default function SitesPage() {
       </header>
 
       <div className="max-w-screen-sm mx-auto mt-4">
-        <SiteInfoCard />
+        <SiteInfoCard currentInfo={currentInfo} allInfo={allInfo} />
       </div>
     </div>
   )
