@@ -1,9 +1,11 @@
-import { Search } from "lucide-react";
+export const dynamic = 'force-dynamic'
 
-import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react"
+
+import { Input } from "@/components/ui/input"
 import { turso } from "@/lib/turso"
 
-import SiteInfoCard from "./components/SiteInfoCard";
+import SiteInfoCard from "./components/SiteInfoCard"
 
 export default async function SitesPage() {
   const client = turso()
