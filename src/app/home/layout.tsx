@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/icon";
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
-import type { Metadata } from "next";
+import { useCheckLogin } from "@/hooks"
+import type { Metadata } from "next"
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -15,6 +16,8 @@ export default function HomeLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  useCheckLogin()
+
   return (
     <main className="h-full flex flex-col items-center justify-start">
       {children}
