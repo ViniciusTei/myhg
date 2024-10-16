@@ -15,6 +15,6 @@ export function turso(): Client {
     url: process.env.NEXT_TURSO_DB_URL as string,
     authToken: process.env.NEXT_TURSO_DB_AUTH_TOKEN as string,
     syncInterval: 60,
-    fetch: (input: any) => fetch(input, { cache: 'no-store' }),
+    fetch: (input: Request) => fetch(input, { cache: 'no-store' }),
   });
 }
